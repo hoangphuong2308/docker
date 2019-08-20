@@ -1,0 +1,9 @@
+FROM centos:centos7
+
+RUN yum -y update && yum install -y openssh-server \
+    && yum clean all \
+    && rm -rf /var/cache/yum
+RUN ssh-keygen -A
+ADD ./sshd_config /etc/ssh/sshd_config
+RUN echo root:It@fs0ft | chpasswd
+CMD /usr/sbin/sshd -D

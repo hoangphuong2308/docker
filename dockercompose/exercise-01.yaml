@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+  #set name for container like command "docker run --name" 
+  drupal:
+    #pull docker image like command "docker pull" 
+    image: drupal:8.7
+    #publish port like command "docker run -p"
+    ports:
+         - 8080:80
+    #map volume data like command "docker run -v"
+    volumes:
+         - drupal-data:/var/www/html/sites
+
+  postgres:
+    image: postgres:9.6
+    #set environment like command "docker run -e"
+    environment:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+
+    volumes:
+         - postgres-data:/var/lib/postgresql/data
+
+volumes:
+    #create docker volume for drupal service
+    drupal-data:
+
+    #create docker volume for postgres service
+    postgres-data:
+
+#create docker network like command "docker network create"
+networks:
+    docker-compose-exercise-01:
+       driver: custom-driver-1
+

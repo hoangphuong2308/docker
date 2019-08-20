@@ -1,0 +1,28 @@
+version: "2"
+
+services:
+        es:
+                image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+                ports:
+                        - "9200:9200"
+                        - "9300:9300"
+                networks:
+                        - "foodtrucks-net"
+                environment:
+                        - discovery.type=single-node
+
+        flask:
+                build:
+                        context: .
+                        dockerfile: Dockerfile
+                image: hoangphuong2308/flask:1.1
+                #wait es serviec start complated
+                depends_on:
+                        - es
+                ports: 
+                        - "5000:5000"
+                networks:
+                        - "foodtrucks-net"
+networks:
+        foodtrucks-net:
+
